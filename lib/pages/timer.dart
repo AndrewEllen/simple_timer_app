@@ -14,10 +14,22 @@ class _TimerPageState extends State<TimerPage> {
   late String currentTimeInput = "";
   late int numbersAdded = 0;
 
-  setTimer(String time) {
-    int numericalTime = int.parse(time);
-    int hours, minutes, seconds;
-    
+  setTimer(String time) async {
+    int _hours, _minutes, _seconds;
+
+    _hours = int.parse(time.substring(0,2));
+    _minutes = int.parse(time.substring(2,4));
+    _seconds = int.parse(time.substring(4,6));
+
+    Timer(Duration(hours: _hours, minutes: _minutes, seconds: _seconds), timerCallback);
+  }
+
+  void timerCallback() {
+    setState(() {
+      countdownTime = "000000";
+      currentTimeInput = "";
+      numbersAdded = 0;
+    });
   }
 
   addTime(String inputValue) {
@@ -39,17 +51,9 @@ class _TimerPageState extends State<TimerPage> {
   displayTime(String time) {
     countdownTime = "000000";
     for (int i=0; i < numbersAdded; i++) {
-      countdownTime = countdownTime.substring(0,6 - numbersAdded) + currentTimeInput;
-      //final replaced = myString.replaceFirst(RegExp('e'), '*', startIndex);  // hello h*llo
+      countdownTime = countdownTime.substring(0,6 - numbersAdded) + time;
     }
-    print(time);
   }
-
-/*  removeTime(String inputValue) {
-    setState(() {
-      countdownTime = countdownTime.substring(0, countdownTime.length - 1);
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +95,13 @@ class _TimerPageState extends State<TimerPage> {
                       });
                       displayTime(currentTimeInput);
                     },
-                    rightIcon: Icon(Icons.backspace, color: appSecondaryColour),
+                    rightIcon: Icon(Icons.backspace, color: appSecondaryColour, size: 26),
+                    leftButtonFn: () {
+                      if (numbersAdded > 0) {
+                        setTimer(countdownTime);
+                      } else null;
+                    },
+                    leftIcon: numbersAdded > 0 ? Icon(Icons.check_circle, color: appSecondaryColour, size: 30) : null,
                   ),
                 ),
               )
