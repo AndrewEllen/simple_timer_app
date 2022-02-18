@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:timer_app/exports.dart';
 import 'package:timer_app/constants.dart';
@@ -12,6 +13,12 @@ class _TimerPageState extends State<TimerPage> {
   late String countdownTime = "000000";
   late String currentTimeInput = "";
   late int numbersAdded = 0;
+
+  setTimer(String time) {
+    int numericalTime = int.parse(time);
+    int hours, minutes, seconds;
+    
+  }
 
   addTime(String inputValue) {
     setState(() {
@@ -30,8 +37,9 @@ class _TimerPageState extends State<TimerPage> {
   }
 
   displayTime(String time) {
-    for (int i=0; i <= numbersAdded; i++) {
-      countdownTime = countdownTime.replaceFirst(RegExp('0'), currentTimeInput[i], 6 - numbersAdded);
+    countdownTime = "000000";
+    for (int i=0; i < numbersAdded; i++) {
+      countdownTime = countdownTime.substring(0,6 - numbersAdded) + currentTimeInput;
       //final replaced = myString.replaceFirst(RegExp('e'), '*', startIndex);  // hello h*llo
     }
     print(time);
@@ -51,10 +59,12 @@ class _TimerPageState extends State<TimerPage> {
         body: Center(
           child: Stack(
             children: [
-              Center(
+              Align(
+                alignment: Alignment.topCenter,
                 child: Container(
+                  padding: EdgeInsets.only(top:150),
                   child: Text(
-                      "$countdownTime",
+                    "${countdownTime.substring(0,2)}:${countdownTime.substring(2,4)}:${countdownTime.substring(4,6)}",
                       style: TextStyle(
                         color: appSecondaryColour,
                         fontSize: 60,
@@ -62,8 +72,10 @@ class _TimerPageState extends State<TimerPage> {
                   ),
                 ),
               ),
-              Center(
+              Align(
+                alignment: Alignment.bottomCenter,
                 child: Container(
+                  padding: EdgeInsets.only(top:325),
                   child: NumericKeyboard(
                     onKeyboardTap: addTime,
                     textColor: appSecondaryColour,
