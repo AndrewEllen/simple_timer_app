@@ -14,7 +14,11 @@ class _AlarmPageState extends State<AlarmPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appPrimaryColour,
-        body: Text("Alarm", style: TextStyle(color: Colors.white),),
+        body: Stack(
+          children: [
+            Text("Alarm", style: TextStyle(color: Colors.white),),
+          ],
+        ),
       ),
     );
   }
