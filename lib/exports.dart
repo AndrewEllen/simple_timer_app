@@ -1,4 +1,4 @@
-export 'pages/main_page.dart';
-export 'pages/timer.dart';
-export 'pages/alarm.dart';
-export 'pages/stopwatch.dart';
+export 'views/main_page.dart';
+export 'views/timer.dart';
+export 'views/alarm.dart';
+export 'views/stopwatch.dart';
